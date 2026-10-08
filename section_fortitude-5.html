@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section Fortitude ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap');
+
+:root{
+  --pink:#ff4fa3; --hot:#ff2f92; --light:#ffd6ed; --pale:#fff4fa;
+  --deep:#8b175d; --purple:#b84dff; --ink:#4c1640; --white:#fff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; font-family:'Fredoka',sans-serif; color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%,#fff 0 3%,transparent 4%),
+    radial-gradient(circle at 90% 20%,#fff 0 2%,transparent 3%),
+    linear-gradient(135deg,#ffb6dc,#ff6bb5 45%,#ff9ed1);
+  overflow-x:hidden;
+}
+button{font-family:inherit}
+.hidden{display:none!important}
+.sparkles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.sparkles i{position:absolute;color:#fff;opacity:.65;animation:float 5s ease-in-out infinite}
+.sparkles i:nth-child(1){left:5%;top:15%;font-size:22px}.sparkles i:nth-child(2){left:88%;top:10%;font-size:28px;animation-delay:1s}
+.sparkles i:nth-child(3){left:15%;bottom:15%;font-size:26px;animation-delay:2s}.sparkles i:nth-child(4){right:8%;bottom:20%;font-size:20px;animation-delay:3s}
+@keyframes float{50%{transform:translateY(-18px) rotate(15deg);opacity:1}}
+
+#app{position:relative;z-index:1;max-width:1250px;margin:auto;padding:18px}
+.topbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
+.navbtn,.exit{
+  border:0;border-radius:999px;background:#fff;color:var(--deep);font-weight:700;
+  box-shadow:0 6px 18px #9b195944;cursor:pointer;transition:.2s;
+}
+.navbtn{padding:11px 18px}.navbtn:hover,.exit:hover{transform:translateY(-3px) scale(1.03)}
+.title{text-align:center;flex:1}
+.title h1{margin:0;font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:2px;text-shadow:3px 4px 0 #fff}
+.title p{margin:0;font-size:15px;font-weight:600;color:#72134d}
+
+.classroom{
+  background:#ffd7ecaa;border:3px solid #fff;border-radius:30px;padding:18px;
+  box-shadow:0 20px 50px #7f164a44;backdrop-filter:blur(7px)
+}
+.front{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.board{
+  min-height:125px;background:#222936;border:9px solid #b87451;border-radius:15px;
+  color:#fff;text-align:center;padding:16px;position:relative;box-shadow:inset 0 0 0 4px #4b3028,0 8px 15px #7b245144;
+  cursor:pointer;overflow:hidden
+}
+.board .board-label{font-size:15px;letter-spacing:5px;color:#eee}
+.chalk{font-family:cursive;font-size:48px;color:#fff;opacity:0;text-shadow:0 0 2px #fff;position:absolute;left:50%;transform:translateX(-50%);top:47px}
+.chalk.write{animation:chalkwrite 1.6s forwards}
+@keyframes chalkwrite{0%{opacity:0;clip-path:inset(0 100% 0 0)}100%{opacity:1;clip-path:inset(0 0 0 0)}}
+.chalk.erase{animation:erase 1.2s forwards}
+@keyframes erase{0%{opacity:1;filter:none}100%{opacity:0;filter:blur(6px)}}
+
+.tv{
+  min-height:125px;background:#17151b;border:10px solid #f6f0f4;border-radius:22px;box-shadow:0 8px 18px #72204755;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden
+}
+.tv:after{content:"";position:absolute;width:75px;height:6px;background:#333;bottom:-17px;border-radius:5px}
+.tv-screen{width:100%;height:100%;min-height:105px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:28px;letter-spacing:2px}
+.tv.off .tv-screen{background:linear-gradient(#101015,#202027);color:#555;font-size:14px;letter-spacing:3px}
+.tv.on .tv-screen{background:linear-gradient(135deg,#ff3e9e,#ff91c9);text-shadow:0 3px 0 #8d185e;animation:tvglow 1.5s infinite alternate}
+@keyframes tvglow{to{filter:brightness(1.2)}}
+
+.teacher-row{text-align:center;margin:15px 0}
+.teacher{
+  display:inline-flex;align-items:center;justify-content:center;width:85px;height:62px;border:0;border-radius:18px;
+  background:#ffcae6;box-shadow:0 7px 15px #7e245144;cursor:pointer;font-size:42px;transition:.2s
+}
+.teacher:hover{transform:translateY(-4px) rotate(-2deg)}
+
+.desks{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px 9px;align-items:center;max-width:1100px;margin:0 auto}
+.student{
+  min-height:76px;border:2px solid #fff;border-radius:17px;background:linear-gradient(145deg,#fff5fb,#ffb9dc);
+  box-shadow:0 7px 14px #8c205044;cursor:pointer;color:#681346;font-weight:700;
+  padding:6px 3px;transition:.2s;position:relative;overflow:hidden
+}
+.student:hover{transform:translateY(-5px) rotate(1deg);box-shadow:0 12px 22px #8c205066}
+.student .deskicon{font-size:24px;display:block}.student small{font-size:12px}
+.student.gap{visibility:hidden;pointer-events:none}
+.rowlabel{grid-column:1/-1;text-align:center;font-weight:800;color:#8c175d;letter-spacing:1px;margin:3px 0 -2px}
+
+.room{
+  min-height:calc(100vh - 36px);display:flex;align-items:center;justify-content:center;padding:25px 0
+}
+.card{
+  width:min(900px,100%);background:#fff2faeF;border:4px solid #fff;border-radius:35px;padding:30px;
+  box-shadow:0 25px 70px #72174655;position:relative;text-align:center
+}
+.card:before{content:"♡ ｡ﾟ•┈୨♡୧┈•ﾟ｡ ♡";display:block;color:#ff5cab;font-size:18px;margin-bottom:8px}
+.card h2{font-size:42px;margin:5px 0 10px;color:#9b1d68}
+.card .avatar{font-size:64px;margin:8px}
+.card p{font-size:19px;line-height:1.55;margin:12px auto;max-width:720px}
+.exit{position:absolute;right:18px;top:16px;padding:8px 13px;font-size:13px}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:18px}
+.tag{background:#ffb8dc;color:#74154d;padding:8px 13px;border-radius:999px;font-weight:700}
+
+.officers,.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:20px}
+.officer,.subject{
+  background:#fff;border:2px solid #ff9dce;border-radius:18px;padding:15px;
+  box-shadow:0 7px 15px #84215122
+}
+.officer b,.subject b{display:block;color:#a0196c;font-size:18px}.officer span{font-size:13px;color:#8b5274}
+.subject p{font-size:14px!important;margin:7px 0!important}
+
+
+/* ===== FORTITUDE MOTION PACK ===== */
+@keyframes pageIn{from{opacity:0;transform:scale(.94) translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes pageOut{to{opacity:0;transform:scale(1.04) translateY(-10px);filter:blur(5px)}}
+@keyframes popIn{0%{opacity:0;transform:translateY(20px) scale(.85)}70%{transform:translateY(-4px) scale(1.03)}100%{opacity:1;transform:none}}
+@keyframes deskBob{50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes sparkleBurst{0%{opacity:1;transform:scale(.3) translate(0,0)}100%{opacity:0;transform:scale(1.7) translate(var(--x),var(--y))}}
+@keyframes tvBoot{0%{transform:scaleX(.05);opacity:.2;filter:brightness(2)}45%{transform:scaleX(1.08);opacity:1}100%{transform:scaleX(1);filter:brightness(1)}}
+@keyframes boardGlow{0%,100%{box-shadow:inset 0 0 0 4px #4b3028,0 8px 15px #7b245144}50%{box-shadow:inset 0 0 0 4px #4b3028,0 8px 28px #ff9ed188}}
+@keyframes chalkDust{0%{opacity:0;transform:scale(.2)}40%{opacity:.9}100%{opacity:0;transform:scale(2) translateY(-22px)}}
+@keyframes eraserSweep{0%{opacity:0;transform:translateX(-150px) rotate(-8deg)}25%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translateX(150px) rotate(8deg)}}
+@keyframes heartFloat{0%{opacity:0;transform:translateY(10px) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-70px) scale(1.15)}}
+@keyframes titleShimmer{0%,100%{text-shadow:3px 4px 0 #fff}50%{text-shadow:3px 4px 0 #fff,0 0 18px #ff55ad}}
+@keyframes officerPulse{50%{transform:translateY(-3px) rotate(.5deg)}}
+@keyframes subjectPop{50%{transform:scale(1.025)}}
+body{transition:background .7s ease}
+#app{animation:pageIn .65s cubic-bezier(.2,.8,.2,1)}
+.title h1{animation:titleShimmer 3s ease-in-out infinite}
+.classroom{animation:popIn .7s .05s both}
+.front > *{animation:popIn .6s both}
+.front > :nth-child(2){animation-delay:.1s}
+.teacher-row{animation:popIn .65s .18s both}
+.student{animation:popIn .5s both}
+.student:nth-child(1){animation-delay:.04s}.student:nth-child(2){animation-delay:.07s}.student:nth-child(3){animation-delay:.10s}
+.student:nth-child(4){animation-delay:.13s}.student:nth-child(5){animation-delay:.16s}.student:nth-child(6){animation-delay:.19s}
+.student:nth-child(7){animation-delay:.22s}.student:nth-child(8){animation-delay:.25s}.student:nth-child(9){animation-delay:.28s}
+.student:nth-child(10){animation-delay:.31s}.student:nth-child(11){animation-delay:.34s}.student:nth-child(12){animation-delay:.37s}
+.student:nth-child(13){animation-delay:.40s}.student:nth-child(14){animation-delay:.43s}.student:nth-child(15){animation-delay:.46s}
+.student:nth-child(16){animation-delay:.49s}.student:nth-child(17){animation-delay:.52s}.student:nth-child(18){animation-delay:.55s}
+.student:nth-child(19){animation-delay:.58s}.student:nth-child(20){animation-delay:.61s}.student:nth-child(21){animation-delay:.64s}
+.student:nth-child(22){animation-delay:.67s}.student:nth-child(23){animation-delay:.70s}.student:nth-child(24){animation-delay:.73s}
+.student:nth-child(25){animation-delay:.76s}.student:nth-child(26){animation-delay:.79s}.student:nth-child(27){animation-delay:.82s}
+.student:nth-child(28){animation-delay:.85s}.student:nth-child(29){animation-delay:.88s}.student:nth-child(30){animation-delay:.91s}
+.student:active,.navbtn:active,.teacher:active,.exit:active{transform:scale(.92)}
+.tv.on .tv-screen{animation:tvglow 1.5s infinite alternate,tvBoot .55s cubic-bezier(.2,.8,.2,1)}
+.tv.on{animation:popIn .45s both}
+.tv.off{animation:none}
+.board.active{animation:boardGlow 1.3s ease-in-out 2}
+.chalkDust,.heart{position:absolute;pointer-events:none;z-index:5}
+.chalkDust{width:7px;height:7px;background:#fff;border-radius:50%;animation:chalkDust .9s ease-out forwards}
+.eraserFX{position:absolute;top:52px;left:50%;width:105px;height:22px;background:linear-gradient(#f5d9e9,#fff,#dba7c8);border-radius:7px;box-shadow:0 3px 8px #0008;animation:eraserSweep 1.1s ease-in-out forwards;z-index:4}
+.heart{color:#ff4fa3;font-size:18px;animation:heartFloat 1.1s ease-out forwards}
+.room{animation:pageIn .6s cubic-bezier(.2,.8,.2,1)}
+.card{animation:popIn .7s .05s both}
+.officer{animation:popIn .45s both}
+.officer:nth-child(odd){animation-delay:.08s}.officer:nth-child(even){animation-delay:.15s}
+.subject{animation:popIn .45s both}
+.subject:nth-child(3n){animation-delay:.1s}
+.exit{animation:popIn .4s .2s both}
+.navbtn{transition:transform .2s,box-shadow .2s,background .2s}
+.navbtn:hover{box-shadow:0 10px 24px #9b195966;background:#fff8fc}
+.officer:hover{animation:officerPulse .7s ease-in-out infinite}
+.subject:hover{animation:subjectPop .7s ease-in-out infinite}
+.teacher:hover{box-shadow:0 12px 24px #7e245166}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition:none!important}
+}
+
+@media(max-width:800px){
+ .front{grid-template-columns:1fr}.desks{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.student{height:70px;min-height:70px}
+}
+@media(max-width:520px){
+ #app{padding:10px}.topbar{flex-wrap:wrap}.title{order:-1;width:100%}
+ .desks{grid-template-columns:repeat(3,1fr)}.card{padding:24px 16px}.card h2{font-size:32px}.card p{font-size:17px}
+}
+
+/* === FORTITUDE RIGHT-SIDE COMMAND PANEL === */
+.classroom-main-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 245px;
+  gap:22px;
+  align-items:stretch;
+  width:min(1220px,100%);
+  margin:18px auto 0;
+}
+.desk-zone{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 6px;
+}
+.classroom-side-panel{
+  min-height:100%;
+  border:2px solid rgba(255,255,255,.72);
+  border-radius:26px;
+  padding:20px 16px;
+  background:linear-gradient(160deg,rgba(255,255,255,.78),rgba(255,214,238,.72));
+  box-shadow:0 18px 45px rgba(196,72,143,.16),inset 0 1px 0 rgba(255,255,255,.9);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  animation:sidePanelIn .8s cubic-bezier(.2,.8,.2,1) both;
+}
+.side-panel-title{
+  text-align:center;
+  font-weight:900;
+  letter-spacing:1.5px;
+  color:#b42c75;
+  font-size:1.05rem;
+}
+.side-panel-subtitle{
+  text-align:center;
+  font-size:.78rem;
+  color:#87536f;
+  margin-bottom:9px;
+}
+.side-panel-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.side-panel-buttons button{
+  width:100% !important;
+  min-height:82px;
+  margin:0 !important;
+  transform-origin:center;
+  box-shadow:0 10px 22px rgba(179,54,117,.13);
+}
+.side-panel-buttons button:hover{
+  transform:translateY(-4px) scale(1.02);
+}
+@keyframes sidePanelIn{
+  from{opacity:0;transform:translateX(30px) scale(.96)}
+  to{opacity:1;transform:translateX(0) scale(1)}
+}
+@media(max-width:900px){
+  .classroom-main-layout{grid-template-columns:1fr 205px;gap:14px}
+  .classroom-side-panel{padding:15px 11px;border-radius:21px}
+}
+@media(max-width:680px){
+  .classroom-main-layout{grid-template-columns:1fr;gap:14px}
+  .classroom-side-panel{min-height:0}
+  .side-panel-buttons{display:grid;grid-template-columns:1fr 1fr}
+}
+
+
+/* Clean right-side vertical stack: Officers on top, Subjects below */
+.classroom-side-panel{
+  justify-content:center;
+  align-items:stretch;
+}
+.side-panel-buttons{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:16px;
+}
+.side-panel-buttons .navbtn{
+  width:100% !important;
+  min-height:88px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+</style>
+</head>
+<body>
+<div class="sparkles"><i>✦</i><i>♡</i><i>✧</i><i>♥</i></div>
+<div id="app"></div>
+
+<script>
+const students = [
+["Drake","drake","Almost every reason for chaos, but when it comes to AP, his unstoppable.","🔥"],
+["Nerijen","neri","A smart and nice classmate and a responsible officer.","📚"],
+["Rckt","rcket","A car maniac who loves Hot Wheels.","🏎️"],
+["Andi","andi","One of Ma'am Ria's friends. Even though she gets teased most of the time, she is still fierce and can make a comeback.","💗"],
+["Aj","aj","The calculator. He is the classroom calculator.","🧮"],
+["Ysha","ysha","Allegedly the GF of Killian.","🎀"],
+["Liam","liam","Loves Minecraft and noodles.","⛏️"],
+["Imogen","imogen","A taekwondo player — she could kick your ahh.","🥋"],
+["Jhex","jhex","A nice but smart classmate, one of the members of the legendary F4.","⭐"],
+["Eyahrie","eyahrie","Nice and has blurry vision.","👓"],
+["Jored","jored","A good classmate, friends with Liam and his group.","🤝"],
+["Aya","aya","A drawing enthusiast who loves drawing.","🎨"],
+["Gavin","gavin","CEO of the F4.","👑"],
+["Andrew","andrew","The hustler of the class.","💼"],
+["Aiyanna","aiyanna","The new muse of Fortitude.","🌸"],
+["Terrence","terrence","A cute Chinese-looking classmate, chubby.","🧸"],
+["Cholo","cholo","The tallest and the second most handsome in Fortitude.","😎"],
+["Audree","audree","A friendly and memorable classmate in Section Fortitude.","🌷"],
+["Keefer","keefer","A classmate who brings his own personality and energy to Fortitude.","✨"],
+["Moanna","moanna","One of the smart ones in the whole class.","🧠"],
+["Bosh","bosh","One of the zesty dudes in the class.","😏"],
+["Vianne","vianne","Loves makeup and always has a pimple patch.","💄"],
+["Zion","zion","A zesty one too, but he is smart too. He can lead in group projects.","📋"],
+["Yaffa","yaffa","She is mostly quiet, but during break she goes with her friends.","🌙"],
+["Caitlyn","caitlyn","A smart and responsible classmate. She doesn't let someone do a bad thing.","🛡️"],
+["Killian","killian","A gentleman and the most handsome in the whole classroom.","🎩"],
+["Resha","resha","The richest; always gives food to others.","🍪"],
+["Railey","railey","Ipis man — scared of roaches, but don't let that fool you. He is very rich he could buy you (jk).","🪳"],
+["Khalid","khalid","Co-founder of F4 and one of the popular boys.","💎"],
+["Chrysler","chrysler","The laughing maniac. She laughs uncontrollably in a funny way when something funny happens.","😂"]
+];
+
+const officers = [
+["Caitlyn","President","Leads the class and helps keep everyone responsible."],
+["Neri","Vice President","Supports the president and helps organize the class."],
+["Jhex","Secretary","Keeps class information organized and helps record important things."],
+["Andi","Assistant Secretary","Helps the secretary and supports class organization."],
+["Aj","Treasurer","Helps manage class funds and keeps the classroom calculator energy alive."],
+["Andrew","Auditor","Checks and keeps an eye on class records and resources."],
+["Audree","PIO","Helps share information and keep everyone updated."],
+["Moanna","PIO","Helps communicate announcements and class information."],
+["Cholo","Escort","Represents and supports the class during events."],
+["Aiyanna","Muse","Brings style, spirit and positive energy to Section Fortitude."]
+];
+
+const subjects = [
+["Filipino","📖","Explores the Filipino language, literature, culture, traditions and identity."],
+["Computer","💻","Builds digital skills, computer knowledge, creativity and responsible technology use."],
+["TLE","🛠️","Develops practical skills, technology knowledge, entrepreneurship and useful life skills."],
+["Values","💗","Builds character, good decisions, respect, responsibility and positive relationships."],
+["Science","🔬","Explores how the natural world works through observation, evidence and experiments."],
+["MAPEH","🎨","Combines Music, Arts, Physical Education and Health for creativity and wellbeing."],
+["AP","🌏","Learns about people, places, history, society, government and the world around us."],
+["Math","➗","Develops logical thinking, problem-solving, numbers, patterns and mathematical reasoning."],
+["English","✍️","Builds communication, reading, writing, speaking and understanding of literature."]
+];
+
+const app=document.getElementById("app");
+let chalkOn=false, tvOn=false;
+
+function shell(){
+ return `<div class="topbar">
+   <button class="navbtn" onclick="showSubjects()">📚 Subjects</button>
+   <div class="title"><h1>SECTION FORTITUDE</h1><p>Where dreams are made ♡</p></div>
+   <button class="navbtn" onclick="showOfficers()">🎀 Officers</button>
+ </div>`;
+}
+function classroom(){
+ app.innerHTML = shell()+`
+ <main class="classroom">
+  <div class="front">
+   <div class="tv off" id="tv" onclick="toggleTV()"><div class="tv-screen">TV • OFF</div></div>
+   <div class="board" onclick="toggleBoard()"><div class="board-label">BLACKBOARD</div><div class="chalk" id="chalk">4T2D</div></div>
+  </div>
+  <div class="teacher-row"><button class="teacher" onclick="showTeacher()" title="Teacher's desk">🪑</button><div>Ma'am Ria's Desk</div></div>
+  
+<div class="classroom-main-layout">
+  <div class="desk-zone">
+    <div class="desks" id="desks"></div>
+  </div>
+  <aside class="classroom-side-panel">
+    <div class="side-panel-title">FORTITUDE HUB</div>
+    <div class="side-panel-subtitle">Classroom shortcuts</div>
+    <div class="side-panel-buttons">
+      <button class="navbtn" onclick="showOfficers()">🎀 Officers</button>
+      <button class="navbtn" onclick="showSubjects()">📚 Subjects</button>
+    </div>
+  </aside>
+</div>
+ </main>`;
+ renderDesks();
+}
+function renderDesks(){
+ const d=document.getElementById("desks");
+ const cols=5;
+ let out="";
+ students.forEach((s,i)=>{
+   const row=Math.floor(i/cols)+1;
+   const col=(i%cols)+1;
+   out+=`<button class="student" style="grid-column:${col};grid-row:${row}" onclick="showStudent(${i})" aria-label="Open ${s[0]}'s desk">
+     <span class="deskicon">${s[3]}</span><small>${s[0]}</small><br>🪑
+   </button>`;
+ });
+ d.innerHTML=out;
+}
+function toggleTV(){
+ const tv=document.getElementById("tv");
+ burst(tv);
+ tvOn=!tvOn;
+ tv.className="tv "+(tvOn?"on":"off");
+ tv.querySelector(".tv-screen").textContent=tvOn?"AJA 4T2D":"TV • OFF";
+}
+function toggleBoard(){
+ const board=document.querySelector(".board");
+ const c=document.getElementById("chalk");
+ chalkOn=!chalkOn;
+ c.classList.remove("write","erase");
+ board.classList.toggle("active",chalkOn);
+ if(chalkOn){
+   void c.offsetWidth;
+   c.classList.add("write");
+   for(let i=0;i<12;i++){
+     const dust=document.createElement("i");
+     dust.className="chalkDust";
+     dust.style.left=(35+Math.random()*30)+"%";
+     dust.style.top=(62+Math.random()*20)+"%";
+     dust.style.animationDelay=(Math.random()*.45)+"s";
+     board.appendChild(dust);
+     setTimeout(()=>dust.remove(),1500);
+   }
+ }else{
+   const er=document.createElement("div");
+   er.className="eraserFX";
+   board.appendChild(er);
+   void c.offsetWidth;
+   c.classList.add("erase");
+   setTimeout(()=>{er.remove();c.classList.remove("erase");},1200);
+ }
+}
+function baseRoom(title,avatar,body){
+ app.innerHTML=`<div class="room"><section class="card">
+ <button class="exit" onclick="classroom()">← Exit</button>
+ <div class="avatar">${avatar}</div><h2>${title}</h2>${body}
+ </section></div>`;
+}
+function showTeacher(){
+ burst(document.activeElement);
+ setTimeout(()=>baseRoom("Ma'am Ria","👩‍🏫",`<p><b>Ma'am Ria</b></p>
+ <p>is a example of the kind of teacher that has pure determination to teach us and make us learn about <b>Filipino culture</b>.</p>
+ <div class="tags"><span class="tag">Determined ♡</span><span class="tag">Filipino Culture 🇵🇭</span><span class="tag">Teacher of 7 Fortitude</span></div>`),180);
+}
+function showStudent(i){
+ const s=students[i];
+ const clicked=document.activeElement;
+ burst(clicked);
+ setTimeout(()=>baseRoom(s[0],s[3],`<p>${s[2]}</p><div class="tags"><span class="tag">7 Fortitude ♡</span><span class="tag">Student Room</span><span class="tag">Kawaii Zone</span></div>`),180);
+}
+function showOfficers(){
+ burst(document.activeElement);
+ let cards=officers.map(o=>`<div class="officer"><b>${o[0]}</b><strong>${o[1]}</strong><span>${o[2]}</span></div>`).join("");
+ setTimeout(()=>baseRoom("Fortitude Officers","🎀",`<p>Our classroom officers and what they do.</p><div class="officers">${cards}</div>`),180);
+}
+function showSubjects(){
+ burst(document.activeElement);
+ let cards=subjects.map(s=>`<div class="subject"><b>${s[1]} ${s[0]}</b><p>${s[2]}</p></div>`).join("");
+ setTimeout(()=>baseRoom("Fortitude Subjects","📚",`<p>Every subject helps us grow in a different way.</p><div class="subjects">${cards}</div>`),180);
+}
+
+function burst(el){
+ if(!el)return;
+ const rect=el.getBoundingClientRect();
+ const chars=["♡","✦","✧","♥","•"];
+ for(let i=0;i<8;i++){
+   const h=document.createElement("span");
+   h.className="heart";
+   h.textContent=chars[i%chars.length];
+   h.style.left=(rect.left+rect.width/2)+"px";
+   h.style.top=(rect.top+rect.height/2)+"px";
+   h.style.setProperty("--x",((Math.random()-.5)*120)+"px");
+   h.style.setProperty("--y",((Math.random()-.5)*90)+"px");
+   document.body.appendChild(h);
+   setTimeout(()=>h.remove(),1200);
+ }
+}
+
+classroom();
+</script>
+</body>
+</html>
